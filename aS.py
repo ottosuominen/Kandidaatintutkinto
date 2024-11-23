@@ -20,14 +20,6 @@ SETTINGS = {
 }
 
 def calculatePhysicalIAM(angleOfIncidence, n=1.526, K=4, L=0.002):
-    """
-    Laskee IAM (Incident Angle Modifier) -arvon tulokulmalle
-    :param angleOfIncidence: Tulokulma asteina
-    :param n: Lasin taitekerroin (oletus 1.526)
-    :param K: Lasin absorptiokerroin (oletus 4)
-    :param L: Lasin paksuus (oletus 0.002)
-    :return: IAM-arvo (välillä 0–1)
-    """
     thetaRad = math.radians(angleOfIncidence)
     thetaRefracted = math.asin(math.sin(thetaRad) / n)
     
@@ -40,7 +32,6 @@ def calculatePhysicalIAM(angleOfIncidence, n=1.526, K=4, L=0.002):
     return max(0, min(1, tauTheta / math.exp(-K * L) * (1 + ((1 - n) / (1 + n)) ** 2)))
 
 def calculateSolarData(currentDate):
-    """Laskee auringon ja paneelin parametrit annetulle ajanhetkelle"""
     observer = ephem.Observer()
     observer.lat, observer.lon = SETTINGS['latitude'], SETTINGS['longitude']
     observer.date = currentDate
