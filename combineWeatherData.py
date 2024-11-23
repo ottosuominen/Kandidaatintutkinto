@@ -57,27 +57,27 @@ def processRadiationData(filePath):
 
 def main(weatherFilePath, radiationFilePath, combinedOutputFile):
     # Määritetään Suomen aikavyöhyke
-    FI_TZ = pytz.timezone('Europe/Helsinki')  # pytz: mahdollistaa Pandas-datan ajanhallinnan.
+    FI_TZ = pytz.timezone('Europe/Helsinki')
     
     # Käsitellään molemmat datasetit
     weatherDf = processWeatherData(weatherFilePath)
     radiationDf = processRadiationData(radiationFilePath)
     
     # Muutetaan aikaleimat datetime-muotoon ja asetetaan aikavyöhykkeeksi UTC
-    weatherDf['Timestamp'] = pd.to_datetime(weatherDf['Timestamp']).dt.tz_localize('UTC')  # Aikavyöhykkeen lokalisointi
+    weatherDf['Timestamp'] = pd.to_datetime(weatherDf['Timestamp']).dt.tz_localize('UTC')
     radiationDf['Timestamp'] = pd.to_datetime(radiationDf['Timestamp']).dt.tz_localize('UTC')
     
     # Yhdistetään dataframet timestamp-sarakkeen perusteella
-    combinedDf = pd.merge(radiationDf, weatherDf, on='Timestamp', how='outer')  # Yhdistetään ulommalla yhdistystavalla
+    combinedDf = pd.merge(radiationDf, weatherDf, on='Timestamp', how='outer')
     
     # Järjestetään aikaleiman mukaan
-    combinedDf = combinedDf.sort_values('Timestamp')  # Järjestetään aikaleimat aikajärjestykseen
+    combinedDf = combinedDf.sort_values('Timestamp')
 
     # Muunnetaan aikaleimat Suomen aikaan yhdistetyssä DataFramessa
     combinedDf['Timestamp'] = combinedDf['Timestamp'].dt.tz_convert(FI_TZ)
 
     # Muotoillaan aikaleima Exceliin sopivaksi
-    combinedDf['Timestamp'] = combinedDf['Timestamp'].dt.strftime('%d.%m.%Y %H:%M')  # Muotoillaan päivämäärä Excelin tyyliin
+    combinedDf['Timestamp'] = combinedDf['Timestamp'].dt.strftime('%d.%m.%Y %H:%M')
     
     print(combinedDf)
     # Tallennetaan CSV-tiedostoon puolipisteellä erotettuna
