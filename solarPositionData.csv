@@ -1,4 +1,4 @@
-date,solarAltitude,solarAzimuth,angleOfIncidence,cosineFactor,IAM
+date,solarAltitude,solarAzimuth,angleOfIncidence,cosineFactor,IAM_B
 21.05.2024 00:00,-8.0848,341.8353,136.2177,-0.7220,0.0000
 21.05.2024 00:15,-8.6124,345.3520,137.4906,-0.7372,0.0000
 21.05.2024 00:30,-9.0258,348.8881,138.4738,-0.7487,0.0000
